@@ -2,4 +2,4 @@
 
 - [x] Setup router
 - [] Protected routes (custom component)
-- [] Set up a context (Context API)
+- [x] Set up a context (Context API)

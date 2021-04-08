@@ -4,6 +4,7 @@ import Home from './components/Home';
 import SignUp from './components/SignUp';
 import SignIn from './components/SignIn';
 import SecretInfo from './components/SecretInfo';
+import ProtectedRoute from './components/ProtectedRoute';
 import NotFound from './components/NotFound';
 
 const App = () => {
@@ -14,7 +15,7 @@ const App = () => {
         <Route exact path='/' component={Home} />
         <Route exact path='/signup' component={SignUp} />
         <Route exact path='/signin' component={SignIn} />
-        <Route exact path='/secret-info' component={SecretInfo} />
+        <ProtectedRoute exact path='/secret-info' component={SecretInfo} />
         <Route path='*' component={NotFound} />
       </Switch>
     </div>

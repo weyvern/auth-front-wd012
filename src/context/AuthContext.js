@@ -9,7 +9,25 @@ const AuthState = ({ children }) => {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    if (token) setIsAuthenticated(true);
+    const verifySession = async () => {
+      const options = {
+        headers: {
+          token
+        }
+      };
+      const res = await fetch('http://localhost:5000/auth/verify-session', options);
+      const { success } = await res.json();
+      if (success) {
+        setIsAuthenticated(true);
+      } else {
+        localStorage.removeItem('token');
+        setIsAuthenticated('false');
+      }
+    };
+
+    if (token) {
+      verifySession();
+    }
   }, []);
 
   return (

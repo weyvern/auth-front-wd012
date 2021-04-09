@@ -7,6 +7,11 @@ const AuthState = ({ children }) => {
   const [user, setUser] = useState({});
   const [error, setError] = useState('');
 
+  const logOut = () => {
+    localStorage.removeItem('token');
+    setIsAuthenticated(false);
+  };
+
   useEffect(() => {
     const token = localStorage.getItem('token');
     const verifySession = async () => {
@@ -31,7 +36,7 @@ const AuthState = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated, user, setUser, error, setError }}>
+    <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated, user, setUser, error, setError, logOut }}>
       {children}
     </AuthContext.Provider>
   );

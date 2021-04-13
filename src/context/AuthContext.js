@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect } from 'react';
+import Cookies from 'js-cookie';
 
 export const AuthContext = createContext();
 
@@ -8,24 +9,22 @@ const AuthState = ({ children }) => {
   const [error, setError] = useState('');
 
   const logOut = () => {
-    localStorage.removeItem('token');
+    Cookies.remove('token');
     setIsAuthenticated(false);
   };
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = Cookies.get('token');
+
     const verifySession = async () => {
-      const options = {
-        headers: {
-          token
-        }
-      };
-      const res = await fetch('http://localhost:5000/auth/verify-session', options);
+      const res = await fetch('http://localhost:5000/auth/verify-session', {
+        credentials: 'include'
+      });
       const { success } = await res.json();
       if (success) {
         setIsAuthenticated(true);
       } else {
-        localStorage.removeItem('token');
+        Cookies.remove('token');
         setIsAuthenticated('false');
       }
     };
@@ -36,7 +35,9 @@ const AuthState = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated, user, setUser, error, setError, logOut }}>
+    <AuthContext.Provider
+      value={{ isAuthenticated, setIsAuthenticated, user, setUser, error, setError, logOut }}
+    >
       {children}
     </AuthContext.Provider>
   );

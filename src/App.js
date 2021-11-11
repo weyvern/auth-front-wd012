@@ -1,4 +1,5 @@
 import { Switch, Route } from 'react-router-dom';
+import AuthState from './context/AuthContext';
 import Navbar from './components/Navbar';
 import Home from './components/Home';
 import SignUp from './components/SignUp';
@@ -9,7 +10,7 @@ import NotFound from './components/NotFound';
 
 const App = () => {
   return (
-    <div>
+    <AuthState>
       <Navbar />
       <Switch>
         <Route exact path='/' component={Home} />
@@ -18,7 +19,7 @@ const App = () => {
         <ProtectedRoute exact path='/secret-info' component={SecretInfo} />
         <Route path='*' component={NotFound} />
       </Switch>
-    </div>
+    </AuthState>
   );
 };
 

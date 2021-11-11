@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { AuthContext } from '../context/AuthContext';
 
 const SignUp = () => {
-  const { isAuthenticated, setIsAuthenticated, error, setError } = useContext(AuthContext);
+  const { isAuthenticated, loading, signUp, error } = useContext(AuthContext);
   const {
     register,
     handleSubmit,
@@ -17,28 +17,8 @@ const SignUp = () => {
     }
   });
 
-  const onSubmit = async data => {
-    const options = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data),
-      credentials: 'include'
-    };
-    try {
-      const res = await fetch('http://localhost:5000/auth/signup', options);
-      const { error } = await res.json();
-      if (error) {
-        setError(error);
-        return setTimeout(() => setError(''), 3000);
-      }
-      setIsAuthenticated(true);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  if (isAuthenticated) return <Redirect to='/' />;
+  if (loading) return <div>Loading...</div>;
+  if (isAuthenticated) return <Redirect to='/secret-info' />;
   return (
     <div className='container'>
       {error && (
@@ -46,7 +26,7 @@ const SignUp = () => {
           {error}
         </div>
       )}
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(signUp)}>
         <div className='form-group'>
           <label htmlFor='name'>Name</label>
           <input

@@ -17,7 +17,7 @@ npm install
 
 Create a .env file with:
 
-- REACT_APP_AUTH_API ![go here](https://github.com/weyvern/auth-api-wd012)
+- REACT_APP_AUTH_API [go here](https://github.com/weyvern/auth-api-wd012)
 
 # Commands
 
